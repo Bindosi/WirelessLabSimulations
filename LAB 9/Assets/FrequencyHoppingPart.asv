@@ -1,0 +1,40 @@
+% Frequency Hopping spread spectrum
+clear; clc
+OSR = 1;
+sys.sps = OSR;
+sys.alpha = 0.3;
+sys.fs = 1e6;
+sys.span = OSR;
+NumberOfSymbols = 91;
+CPSize  =   8;
+fftSize = 64;
+load("FreqHoping125KhzSpan.mat");
+myNumber = mod(21,3)
+NumberOfUsers = 4;
+m_sq        = mseq(2,6);
+prmbl       = [m_sq;m_sq];
+prmbl       = prmbl/rms(prmbl);
+spreadCodes = [code0;code1;code2;code3];
+%% Plotting The received transmission frame
+figure
+plot(20*log10(abs(Y)));
+
+s = stft(Y)
+d = seconds(1e-3);
+win = hamming(100,"periodic");
+
+stft(Y,d,Window=win,OverlapLength=98,FFTLength=128);
+
+
+sps = 16;           % Samples per symbol
+channelBW = 2e6;    % Channel spacing (Hz) as per standard
+symbolRate = 1e6;
+x = [];
+winL = 1000; noverlap = 500; nfft = 8192;
+sampleRate = symbolRate*sps*10;
+
+[s,f,t]=spectrogram(Y,winL,noverlap,nfft,sampleRate,'yaxis');
+imagesc(t/1e-6,f/1e6,10*log10(abs(s))); ylim([0, 100])
+set(gca,'YDir','normal'); cc = colorbar;
+ylabel(cc,'Power/frequency (dB/Hz)');
+hColourbar.Label.Position(1) = 3;

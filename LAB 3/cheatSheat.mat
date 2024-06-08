@@ -1,0 +1,16 @@
+
+%question 5 calculating received power
+signalp=mean(abs(symbs_rx).^2);
+
+
+%question 6 RMS value of EVM
+
+rmsEVM = evm(refSym,rxSym);
+
+%question 7 calculating received noıse power
+signalNoiseP=mean(abs(symbs_rx).^2);
+
+%8 SNR calculatıon
+SNR = 10*log10(signalp/signalNoiseP)
+
+%questıon 10 
